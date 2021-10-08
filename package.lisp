@@ -1,6 +1,7 @@
 ;;;;package.lisp
 
 (defpackage #:vibratsia
+  (:documentation "Resonance Calculation Package.")
   (:use #:cl)
 
   ;;;;pitch.lisp
@@ -23,7 +24,5 @@
    #:symp-rating
    #:symp-rating-by-note
    #:symp-by-string
-   #:assess-note
+   #:assess-note))
 
-;etc
-(:documentation "Resonance Calculation Package."))

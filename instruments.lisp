@@ -8,36 +8,36 @@
 
 (defclass instrument ()
   ((name :initarg :name
-	 :accessor name)
+	 :accessor name
+         :documentation "The name of the instrument")
    (strings :initarg :strings
-	    :accessor strings)))
+	    :accessor strings))
+  (:documentation "Representation of an instrument ..."))
 
 (defmethod print-object ((obj instrument) stream)
-      (print-unreadable-object (obj stream :type t)
-        (with-accessors ((name name)
-			 (strings strings))
-            obj
-          (format stream "~a, strings: ~a" name strings))))
+  (print-unreadable-object (obj stream :type t)
+    (format stream "~a, strings: ~a" (name obj) (strings obj))))
 
 (defun luthier (instrument-name string-freqs)
-  (make-instance 'instrument :name instrument-name
-		             :strings (loop for string in string-freqs
-					    collect (make-note string))))
+  (make-instance 'instrument
+    :name instrument-name
+    :strings (loop :for string :in string-freqs
+                   :collect (make-note string))))
 ;;;;------------------------------------------------------------------------
 ;;;;Predefined Standard Instruments:
-(defconstant violin-open-strings '(196 293.66 440 659.25))
+(alexandria:define-constant violin-open-strings '(196 293.66 440 659.25) :test 'equal)
 
 (defvar violin (luthier 'violin violin-open-strings))
 
-(defconstant viola-open-strings '(130.8 196 293.66 440))
+(alexandria:define-constant viola-open-strings '(130.8 196 293.66 440)  :test 'equal)
 
 (defvar viola (luthier 'viola viola-open-strings))
 
-(defconstant cello-open-strings '(65.4 98 146.8  220))
+(alexandria:define-constant cello-open-strings '(65.4 98 146.8  220)  :test 'equal)
 
 (defvar cello (luthier 'cello cello-open-strings))
 
-(defconstant bass-open-strings '(41.2 55 73.4 98.0))
+(alexandria:define-constant bass-open-strings '(41.2 55 73.4 98.0)  :test 'equal)
 
 (defvar bass (luthier 'bass bass-open-strings))
 
@@ -45,8 +45,8 @@
 ;;;;------------------------------------------------------------------------
 ;;;;Pre-defined unusual instruments:
 ;;;;------------------------------------------------------------------------
-(defvar hardanger-fiddle-strings (mapcar #'(lambda (note-set)
-					     (note-to-freq (first note-set) (second note-set)))
+(defvar hardanger-fiddle-strings (mapcar (lambda (note-set)
+                                           (note-to-freq (first note-set) (second note-set)))
 					 '((B 3) (E 4) (B 4) (F# 5)
 					   (C# 5) (E 5) (F# 5) (G# 5) (B 5))))
 
